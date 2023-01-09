@@ -14,14 +14,13 @@ const PADDLE_MARGIN_BOTTOM = 20;
 const BALL_RADIUS = 5;
 const SCORE_UNIT = 10;
 
-const rules = document.getElementById('rules');
-const rulesBtn = document.getElementById('rules-btn');
-const closeBtn = document.getElementById('close-btn');
+
 
 // variables nécessaires
 
 let leftArrow = false;
 let rightArrow = false;
+let gameOver = false;
 let life = 3;
 let score = 0;
 let level = 1;
@@ -47,7 +46,6 @@ function drawPaddle() {
   ctx.closePath();
 }
 
-drawPaddle();
 
 // Mise en place des touches de contrôle
 
@@ -241,15 +239,15 @@ function showStats(img, iPosX, iPosY, text = '', tPosX = null, tPosY = null) {
   ctx.drawImage(img, iPosX, iPosY, width = 20, height = 20)
 }
 
+// gestion fin partie
 
+function gameover() {
+  if (life <= 0) {
+    showEndInfo('lose');
+    gameOver = true;
+  }
+}
 
-// affichage des régles du jeu
-
-rulesBtn.addEventListener("click", (event) => { rules.classList.add('show')
-});
-
-closeBtn.addEventListener("click", (event) => { rules.classList.remove('show')
-});
 
 // refacto toutes les fct qui on pour but de dessiner
 function draw() {
@@ -268,6 +266,7 @@ function move() {
   bwCollission(); // collision de la balle avec murs
   bpCollission(); // collision de la balle avec planche
   bbCollission(); // collision de la balle avec briques
+  gameover(); // gestion fin partie
 }
 
 function loop() {
@@ -278,3 +277,38 @@ function loop() {
 }
 
 loop();
+
+// importation des elements du DOM
+
+const rules = document.getElementById('rules');
+const rulesBtn = document.getElementById('rules-btn');
+const closeBtn = document.getElementById('close-btn');
+const game_over = document.getElementById('game-over');
+const youWon = document.getElementById('you-won');
+const youLose = document.getElementById('you-lose');
+const restart = document.getElementById('restart');
+
+// affichage des régles du jeu
+
+rulesBtn.addEventListener("click", (event) => { rules.classList.add('show')
+});
+
+closeBtn.addEventListener("click", (event) => { rules.classList.remove('show')
+});
+
+// affichage des infos de fin de partie
+
+function showEndInfo(type = 'win') {
+  game_over.style.visibility = 'visible';
+  game_over.style.opacity = '1';
+
+  if (type === 'win') {
+    youWon.style.visibility = 'visible';
+    youLose.style.visibility = 'hidden';
+    youLose.style.opacity = '0';
+  } else {
+    youWon.style.visibility = 'hidden';
+    youWon.style.opacity = '0';
+    youLose.style.visibility = 'visible';
+  }
+}
