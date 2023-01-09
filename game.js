@@ -112,14 +112,17 @@ function moveBall() {
 function bwCollission() {
   // collision sur les axes de x
   if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+    WALL_HIT.play();
     ball.dx *= -1; // inverse la trajectoire
   }
   // collision sur les axes supp de y
   if (ball.y - ball.radius < 0) {
+    WALL_HIT.play();
     ball.dy *= -1;
   }
   // collision sur les axes inf de y (perte de vie)
   if (ball.y + ball.radius > canvas.height) {
+    LIFE_LOST.play();
     life--;
     resetBall();
     resetPaddle();
@@ -145,6 +148,8 @@ function resetPaddle() {
 function bpCollission() {
   if (ball.x + ball.radius > paddle.x &&
     ball.x - ball.radius < paddle.x + paddle.w && ball.y + ball.radius > paddle.y) {
+
+      PADDLE_HIT.play();
 
       let collidePoint = ball.x - (paddle.x + paddle.w / 2); // faire que les collisions soient aléatoire
       collidePoint = collidePoint / (paddle.w / 2);
@@ -215,6 +220,8 @@ function bbCollission() {
           ball.x - ball.radius < brick.x + brick.w &&
           ball.y + ball.radius > brick.y &&
           ball.y - ball.radius < brick.y + brick.h) {
+
+          BRICK_HIT.play();
           ball.dy *= -1;
           brick.status = false;
           score+= SCORE_UNIT;
