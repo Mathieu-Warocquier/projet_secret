@@ -130,3 +130,9 @@ body {
 #restart:hover {
   background-color: brown;
 }
+
+#canvas {
+  background-color: #111;
+  display: block;
+  border-radius: 4px;
+}
