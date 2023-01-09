@@ -12,7 +12,13 @@ const PADDLE_WIDTH = 100;
 const PADDLE_HEIGHT = 10;
 const PADDLE_MARGIN_BOTTOM = 20;
 
-// propriétés de la planche
+// variables nécessaires
+
+let leftArrow = false;
+let rightArrow = false;
+
+
+// créer la planche
 
 const paddle = {
   x: (canvas.width / 2) - (PADDLE_WIDTH / 2),
@@ -22,7 +28,7 @@ const paddle = {
   dx: 8
 }
 
-// dessin de la planche
+// dessinner la planche
 
 function dramPaddle() {
   ctx.beginPath();
@@ -34,6 +40,44 @@ function dramPaddle() {
 }
 
 dramPaddle();
+
+// Mise en place des touches de contrôle
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === 'Left' || e.key === 'ArrowLeft') {
+    leftArrow = true;
+  } else if (e.key === 'Right' || e.key === 'ArrowRight') {
+    rightArrow = true;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === 'Left' || e.key === 'ArrowLeft') {
+    leftArrow = false;
+  } else if (e.key === 'Right' || e.key === 'ArrowRight') {
+    rightArrow = false;
+  }
+});
+
+// Annimation planche
+
+function movePaddle() {
+  if (leftArrow) {
+    paddle.x -= paddle.dx;
+  } else if (rightArrow) {
+    paddle.x += paddle.dx;
+  }
+}
+
+function loop() {
+  dramPaddle();  // dessinner la planche
+  movePaddle();   // Annimation planche
+  requestAnimationFrame(loop);  // Annimation canvas
+}
+
+loop();
+
+
 
 
 const rules = document.getElementById('rules');
