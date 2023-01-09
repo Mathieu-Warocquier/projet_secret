@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap');
 
+
+:root {
+  --white: #e6e9ea;
+  --black: #373133;
+  --blue: #484fed;
+  --green: #1fcb96;
+}
+
+
+
+
 * {
   box-sizing: border-box;
 }
@@ -24,7 +35,7 @@ body {
 
 .btn {
   cursor: pointer;
-  background-color: black;
+  background-color: var(--blue);
   border: none;
   padding: 10px 20px;
   color: white;
