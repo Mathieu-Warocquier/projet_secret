@@ -11,12 +11,17 @@ ctx.lineWidth = 1;
 const PADDLE_WIDTH = 100;
 const PADDLE_HEIGHT = 10;
 const PADDLE_MARGIN_BOTTOM = 20;
+const BALL_RADIUS = 5;
+
+const rules = document.getElementById('rules');
+const rulesBtn = document.getElementById('rules-btn');
+const closeBtn = document.getElementById('close-btn');
 
 // variables nécessaires
 
 let leftArrow = false;
 let rightArrow = false;
-
+let life = 3;
 
 // créer la planche
 
@@ -69,21 +74,64 @@ function movePaddle() {
   }
 }
 
-function loop() {
-  ctx.clearRect( 0, 0, canvas.width, canvas.height);
-  dramPaddle();  // dessinner la planche
-  movePaddle();   // Annimation planche
-  requestAnimationFrame(loop);  // Annimation canvas
+
+// créer la balle
+
+const ball = {
+  x: canvas.width / 2,
+  y: paddle.y - BALL_RADIUS,
+  radius: BALL_RADIUS,
+  velocity: 7, // vitesse de la balle
+  dx: 3, // déplacement suivant l'axe de x
+  dy: -3, // déplacement suivant l'axe de y
 }
 
-loop();
+// dessiner la balle
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff'
+  ctx.fill();
+  ctx.strokeStyle = '#6198d8'
+  ctx.stroke();
+  ctx.closePath();
+}
+
+// mouvement de la balle
+
+function moveBall() {
+  ball.x += ball.dx;
+  ball.y += ball.dy;
+}
+
+// interaction ball et murs
+
+function bwCollission() {
+  // collision sur les axes de x
+  if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+    ball.dx *= -1; // inverse la trajectoire
+  }
+  // collision sur les axes supp de y
+  if (ball.y - ball.radius < 0) {
+    ball.dy *= -1;
+  }
+  // collision sur les axes inf de y (perte de vie)
+  if (ball.y + ball.radius > canvas.height) {
+    life--;
+    resetBall();
+    resetPaddle();
+  }
+}
+
+function resetBall() {
+  ball.x = canvas.width / 2;
+  ball.y = paddle.y - BALL_RADIUS;
+  ball.dx = 3; // déplacement suivant l'axe de x
+  ball.dy = -3 // déplacement suivant l'axe de y
+}
 
 
-
-
-const rules = document.getElementById('rules');
-const rulesBtn = document.getElementById('rules-btn');
-const closeBtn = document.getElementById('close-btn');
 
 // affichage des régles du jeu
 
@@ -92,3 +140,16 @@ rulesBtn.addEventListener("click", (event) => { rules.classList.add('show')
 
 closeBtn.addEventListener("click", (event) => { rules.classList.remove('show')
 });
+
+
+function loop() {
+  ctx.clearRect( 0, 0, canvas.width, canvas.height);
+  dramPaddle();  // dessinner la planche
+  drawBall(); // dessinner la balle
+  movePaddle();   // Annimation planche
+  moveBall(); // mouvement de la balle
+  bwCollission(); // collision de la balle
+  requestAnimationFrame(loop);  // Annimation canvas
+}
+
+loop();
