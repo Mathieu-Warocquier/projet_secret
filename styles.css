@@ -80,7 +80,33 @@ body {
   margin-bottom: .5rem;
 }
 
+/* icon son */
 
 .sound-container {
   position: absolute;
+  top: 50%;
+  right: 15%;
+}
+
+.sound-container #sound {
+  width: 40px;
+  height: auto;
+  transition: 0.1s ease-in-out;
+}
+
+#sound:hover {
+  box-shadow: 1px 1px 3px rgba(246, 2, 2, 0.508);
+}
+
+/* img du game over */
+
+#game-over {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  height: 250px;
+  width: 300px;
+  opacity: 0;
 }
