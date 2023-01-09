@@ -13,6 +13,7 @@ const PADDLE_HEIGHT = 10;
 const PADDLE_MARGIN_BOTTOM = 20;
 const BALL_RADIUS = 5;
 const SCORE_UNIT = 10;
+const MAX_LEVEL = 3;
 
 
 
@@ -21,6 +22,7 @@ const SCORE_UNIT = 10;
 let leftArrow = false;
 let rightArrow = false;
 let gameOver = false;
+let isPaused = false;
 let life = 3;
 let score = 0;
 let level = 1;
@@ -248,6 +250,33 @@ function gameover() {
   }
 }
 
+// passer au niveau suivant
+
+function nextLevel() {
+  let isLevelUp = true;
+
+  for (let r = 0; r < brickProp.row; r++) {
+    for (let c = 0; c < brickProp.column; c++) {
+      isLevelUp = isLevelUp && !bricks[r][c].status;
+    }
+  }
+
+  if (isLevelUp) {
+    WIN.play();
+    if (level >= MAX_LEVEL) {
+      showEndInfo();
+      gameOver = true;
+      return;
+    }
+
+    brickProp.row += 2;
+    createBricks();
+    ball.velocity += 0.5;
+    resetBall();
+    resetPaddle();
+    level++;
+  }
+}
 
 // refacto toutes les fct qui on pour but de dessiner
 function draw() {
@@ -267,16 +296,40 @@ function move() {
   bpCollission(); // collision de la balle avec planche
   bbCollission(); // collision de la balle avec briques
   gameover(); // gestion fin partie
+  nextLevel(); // passer au niveau suivant
 }
 
 function loop() {
   ctx.clearRect( 0, 0, canvas.width, canvas.height);
-  draw();
-  move();
-  requestAnimationFrame(loop);  // Annimation canvas
+  if (!isPaused) {
+    draw();
+    move();
+  }
+
+  if (!gameOver) {
+    requestAnimationFrame(loop);  // Annimation canvas
+  }
 }
 
 loop();
+
+// gestion elements audio
+
+const sound = document.getElementById('sound');
+sound.addEventListener('click', audioManager);
+
+function audioManager() {
+  // changer l'image
+  let imgSrc = sound.getAttribute('src');
+  let SOUND_IMG = imgSrc === 'img/sound_on.png' ? 'img/mute.png' : 'img/sound_on.png';
+  sound.setAttribute('src', SOUND_IMG);
+
+  WALL_HIT.muted = !WALL_HIT.muted;
+  PADDLE_HIT.muted = !PADDLE_HIT.muted;
+  BRICK_HIT.muted = !BRICK_HIT.muted;
+  WIN_HIT.muted = !WIN_HIT.muted;
+  LIFE_LOST.muted = !LIFE_LOST.muted;
+}
 
 // importation des elements du DOM
 
@@ -290,10 +343,14 @@ const restart = document.getElementById('restart');
 
 // affichage des régles du jeu
 
-rulesBtn.addEventListener("click", (event) => { rules.classList.add('show')
+rulesBtn.addEventListener("click", (event) => {
+  rules.classList.add('show');
+  isPaused = true;
 });
 
-closeBtn.addEventListener("click", (event) => { rules.classList.remove('show')
+closeBtn.addEventListener("click", (event) => {
+  rules.classList.remove('show');
+  isPaused = false;
 });
 
 // affichage des infos de fin de partie
@@ -312,3 +369,9 @@ function showEndInfo(type = 'win') {
     youLose.style.visibility = 'visible';
   }
 }
+
+// relancer la partie
+
+restart.addEventListener('click', () => {
+  location.reload();
+})
