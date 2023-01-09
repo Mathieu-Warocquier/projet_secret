@@ -138,6 +138,20 @@ function resetPaddle() {
   paddle.y = canvas.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT;
 }
 
+// interaction avec la planche et la balle
+
+function bpCollission() {
+  if (ball.x + ball.radius > paddle.x &&
+    ball.x - ball.radius < paddle.x + paddle.w && ball.y + ball.radius > paddle.y) {
+
+      let collidePoint = ball.x - (paddle.x + paddle.w / 2); // faire que les collisions soient aléatoire
+
+    ball.dx = ball.velocity;
+    ball.dy = -ball.velocity;
+
+  }
+}
+
 
 
 // affichage des régles du jeu
@@ -155,7 +169,8 @@ function loop() {
   drawBall(); // dessinner la balle
   movePaddle();   // Annimation planche
   moveBall(); // mouvement de la balle
-  bwCollission(); // collision de la balle
+  bwCollission(); // collision de la balle avec murs
+  bpCollission(); // collision de la balle avec planche
   requestAnimationFrame(loop);  // Annimation canvas
 }
 
