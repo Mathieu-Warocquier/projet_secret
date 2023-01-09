@@ -24,6 +24,7 @@ let leftArrow = false;
 let rightArrow = false;
 let life = 3;
 let score = 0;
+let level = 1;
 
 // créer la planche
 
@@ -231,7 +232,14 @@ function bbCollission() {
   })
 }
 
+// affichage des statistiques de jeu
 
+function showStats(img, iPosX, iPosY, text = '', tPosX = null, tPosY = null) {
+  ctx.fillStyle = '#fff';
+  ctx.font = '2Opx Roboto';
+  ctx.fillText(text, tPosX, tPosY)
+  ctx.drawImage(img, iPosX, iPosY, width = 20, height = 20)
+}
 
 
 
@@ -248,6 +256,9 @@ function draw() {
   drawPaddle();  // dessinner la planche
   drawBall(); // dessinner la balle
   drawBricks(); // dessinner les briques
+  showStats(SCORE_IMG, canvas.width - 100, 5, score, canvas.width - 65, 22);
+  showStats(LIFE_IMG, 35, 5, life, 70 , 22);
+  showStats(LEVEL_IMG, canvas.width/2 - 25, 5, level, canvas.width/2, 22);
 }
 
 // refacto toutes les fct liées aux animations
