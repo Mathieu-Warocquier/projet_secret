@@ -12,6 +12,7 @@ const PADDLE_WIDTH = 100;
 const PADDLE_HEIGHT = 10;
 const PADDLE_MARGIN_BOTTOM = 20;
 const BALL_RADIUS = 5;
+const SCORE_UNIT = 10;
 
 const rules = document.getElementById('rules');
 const rulesBtn = document.getElementById('rules-btn');
@@ -22,6 +23,7 @@ const closeBtn = document.getElementById('close-btn');
 let leftArrow = false;
 let rightArrow = false;
 let life = 3;
+let score = 0;
 
 // créer la planche
 
@@ -35,7 +37,7 @@ const paddle = {
 
 // dessinner la planche
 
-function dramPaddle() {
+function drawPaddle() {
   ctx.beginPath();
   ctx.fillStyle = '#fff';
   ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
@@ -44,7 +46,7 @@ function dramPaddle() {
   ctx.closePath();
 }
 
-dramPaddle();
+drawPaddle();
 
 // Mise en place des touches de contrôle
 
@@ -145,12 +147,84 @@ function bpCollission() {
     ball.x - ball.radius < paddle.x + paddle.w && ball.y + ball.radius > paddle.y) {
 
       let collidePoint = ball.x - (paddle.x + paddle.w / 2); // faire que les collisions soient aléatoire
+      collidePoint = collidePoint / (paddle.w / 2);
 
-    ball.dx = ball.velocity;
-    ball.dy = -ball.velocity;
+      let angle = collidePoint * Math.PI/3;
+
+    ball.dx = ball.velocity * Math.sin(angle);
+    ball.dy = -ball.velocity * Math.cos(angle);
 
   }
 }
+
+// créer les propriètés des briques
+
+const brickProp = {
+  row: 2,
+  column: 13,
+  w: 35,
+  h: 10,
+  padding: 3,
+  offsetX: 55,
+  offsetY: 40,
+  fillColor: '#fff',
+  visible: true,
+}
+
+// stocker les briques dans un tableau
+
+let bricks = [];
+function createBricks() {
+  for (let r = 0; r < brickProp.row; r++) {
+    bricks[r] = [];
+    for (let c = 0; c < brickProp.column; c++) {
+      bricks[r][c] = {
+        x: c * (brickProp.w + brickProp.padding) + brickProp.offsetX,
+        y: r * (brickProp.h + brickProp.padding) + brickProp.offsetY,
+        status: true,
+        ...brickProp
+      }
+    }
+  }
+}
+createBricks();
+
+// dessiner les briques
+
+function drawBricks() {
+  bricks.forEach(column => {
+    column.forEach(brick => {
+      if (brick.status) {
+        ctx.beginPath();
+        ctx.rect(brick.x, brick.y, brick.w, brick.h);
+        ctx.fillStyle = brick.fillColor;
+        ctx.fill();
+        ctx.closePath();
+      }
+    })
+  })
+}
+
+// collision balle bricks
+
+function bbCollission() {
+  bricks.forEach(column => {
+    column.forEach(brick => {
+      if (brick.status) {
+        if (ball.x + ball.radius > brick.x &&
+          ball.x - ball.radius < brick.x + brick.w &&
+          ball.y + ball.radius > brick.y &&
+          ball.y - ball.radius < brick.y + brick.h) {
+          ball.dy *= -1;
+          brick.status = false;
+          score+= SCORE_UNIT;
+        }
+      }
+    })
+  })
+}
+
+
 
 
 
@@ -162,15 +236,26 @@ rulesBtn.addEventListener("click", (event) => { rules.classList.add('show')
 closeBtn.addEventListener("click", (event) => { rules.classList.remove('show')
 });
 
-
-function loop() {
-  ctx.clearRect( 0, 0, canvas.width, canvas.height);
-  dramPaddle();  // dessinner la planche
+// refacto toutes les fct qui on pour but de dessiner
+function draw() {
+  drawPaddle();  // dessinner la planche
   drawBall(); // dessinner la balle
+  drawBricks(); // dessinner les briques
+}
+
+// refacto toutes les fct liées aux animations
+function move() {
   movePaddle();   // Annimation planche
   moveBall(); // mouvement de la balle
   bwCollission(); // collision de la balle avec murs
   bpCollission(); // collision de la balle avec planche
+  bbCollission(); // collision de la balle avec briques
+}
+
+function loop() {
+  ctx.clearRect( 0, 0, canvas.width, canvas.height);
+  draw();
+  move();
   requestAnimationFrame(loop);  // Annimation canvas
 }
 
