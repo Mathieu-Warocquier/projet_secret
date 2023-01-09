@@ -81,6 +81,6 @@ body {
 }
 
 
-.sound-container, #game-over {
-  display: none;
+.sound-container {
+  position: absolute;
 }
