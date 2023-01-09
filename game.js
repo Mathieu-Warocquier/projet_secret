@@ -82,7 +82,7 @@ const ball = {
   y: paddle.y - BALL_RADIUS,
   radius: BALL_RADIUS,
   velocity: 7, // vitesse de la balle
-  dx: 3, // déplacement suivant l'axe de x
+  dx: 3 * (Math.random() * 2 - 1), // déplacement suivant l'axe de x
   dy: -3, // déplacement suivant l'axe de y
 }
 
@@ -124,11 +124,18 @@ function bwCollission() {
   }
 }
 
+// reset la balle et le paddle
+
 function resetBall() {
   ball.x = canvas.width / 2;
   ball.y = paddle.y - BALL_RADIUS;
-  ball.dx = 3; // déplacement suivant l'axe de x
+  ball.dx = 3 * (Math.random() * 2 - 1); // déplacement suivant l'axe de x aléatoire
   ball.dy = -3 // déplacement suivant l'axe de y
+}
+
+function resetPaddle() {
+  paddle.x = (canvas.width / 2) - (PADDLE_WIDTH / 2);
+  paddle.y = canvas.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT;
 }
 
 
