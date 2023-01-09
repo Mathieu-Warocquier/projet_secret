@@ -62,14 +62,15 @@ document.addEventListener("keyup", (e) => {
 // Annimation planche
 
 function movePaddle() {
-  if (leftArrow) {
+  if (leftArrow && paddle.x > 0) {
     paddle.x -= paddle.dx;
-  } else if (rightArrow) {
+  } else if (rightArrow && paddle.x + paddle.w < canvas.width) {
     paddle.x += paddle.dx;
   }
 }
 
 function loop() {
+  ctx.clearRect( 0, 0, canvas.width, canvas.height);
   dramPaddle();  // dessinner la planche
   movePaddle();   // Annimation planche
   requestAnimationFrame(loop);  // Annimation canvas
