@@ -23,7 +23,7 @@ let leftArrow = false;
 let rightArrow = false;
 let gameOver = false;
 let isPaused = false;
-let life = 3;
+let life = 5;
 let score = 0;
 let level = 1;
 
@@ -327,7 +327,7 @@ function audioManager() {
   WALL_HIT.muted = !WALL_HIT.muted;
   PADDLE_HIT.muted = !PADDLE_HIT.muted;
   BRICK_HIT.muted = !BRICK_HIT.muted;
-  WIN_HIT.muted = !WIN_HIT.muted;
+  WIN.muted = !WIN.muted;
   LIFE_LOST.muted = !LIFE_LOST.muted;
 }
 
