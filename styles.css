@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+}
+
+.game {
+  background-color: rgba(34, 34, 34, 0.285);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+
+/* mes btn */
+
+.btn {
+  cursor: pointer;
+  background-color: black;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Roboto Slab', serif;
+  transition: all 0.3s linear;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.508);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(.98);
+}
+
+.rules-btn {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+}
+
+/* règles du jeu */
+
+.rules {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  background-color: aquamarine;
+  color: white;
+  width: 400px;
+  padding: 20px;
+  line-height: 1.5;
+  border-radius: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+
+.rules.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.rules p {
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+
+
+.sound-container, #game-over {
+  display: none;
+}
