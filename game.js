@@ -41,9 +41,9 @@ const paddle = {
 
 function drawPaddle() {
   ctx.beginPath();
-  ctx.fillStyle = '#fff';
+  ctx.fillStyle = '#484fed';
   ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
-  ctx.strokeStyle = '6198d8';
+  ctx.strokeStyle = '#484fed';
   ctx.strokeRect(paddle.x, paddle.y, paddle.w, paddle.h);
   ctx.closePath();
 }
@@ -94,7 +94,7 @@ const ball = {
 function drawBall() {
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff'
+  ctx.fillStyle = '#e6e9ea'
   ctx.fill();
   ctx.strokeStyle = '#6198d8'
   ctx.stroke();
@@ -173,7 +173,7 @@ const brickProp = {
   padding: 3,
   offsetX: 55,
   offsetY: 40,
-  fillColor: '#fff',
+  fillColor: '#1fcb96',
   visible: true,
 }
 
@@ -235,7 +235,7 @@ function bbCollission() {
 // affichage des statistiques de jeu
 
 function showStats(img, iPosX, iPosY, text = '', tPosX = null, tPosY = null) {
-  ctx.fillStyle = '#fff';
+  ctx.fillStyle = '#e6e9ea';
   ctx.font = '2Opx Roboto';
   ctx.fillText(text, tPosX, tPosY)
   ctx.drawImage(img, iPosX, iPosY, width = 20, height = 20)
