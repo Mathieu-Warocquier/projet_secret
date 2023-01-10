@@ -13,7 +13,7 @@ const PADDLE_HEIGHT = 10;
 const PADDLE_MARGIN_BOTTOM = 20;
 const BALL_RADIUS = 5;
 const SCORE_UNIT = 10;
-const MAX_LEVEL = 3;
+const MAX_LEVEL = 1;
 
 
 
@@ -167,11 +167,11 @@ function bpCollission() {
 
 const brickProp = {
   row: 13,
-  column: 13,
-  w: 35,
+  column: 14,
+  w: 38,
   h: 15,
   padding: 1,
-  offsetX: 55,
+  offsetX: 30,
   offsetY: 40,
   fillColor: '#dcb444',
 

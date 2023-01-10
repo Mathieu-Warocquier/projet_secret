@@ -141,10 +141,11 @@ h1 {
   height: 300px;
   visibility: hidden;
   opacity: 0;
+  margin-top: 55px;
 }
 
 #you-won, #you-lose {
-  width: 160px;
+  width: 280px;
   margin-bottom: 20px;
 }
 
@@ -153,7 +154,7 @@ h1 {
   cursor: pointer;
   padding: 4px 8px;
   line-height: 1.5;
-  border: 1px solid var(--darkbleu);
+  border: 2px solid var(--sable);
   border-radius: 4px;
   text-align: center;
   transition: all 0.1s ease-in-out;
