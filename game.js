@@ -324,7 +324,7 @@ sound.addEventListener('click', audioManager);
 function audioManager() {
   // changer l'image
   let imgSrc = sound.getAttribute('src');
-  let SOUND_IMG = imgSrc === 'img/sound_on.png' ? 'img/mute.png' : 'img/sound_on.png';
+  let SOUND_IMG = imgSrc === 'img/sound_on1.png' ? 'img/mute1.png' : 'img/sound_on1.png';
   sound.setAttribute('src', SOUND_IMG);
 
   WALL_HIT.muted = !WALL_HIT.muted;

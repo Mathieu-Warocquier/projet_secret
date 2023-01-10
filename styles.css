@@ -125,7 +125,7 @@ h1 {
 }
 
 #sound:hover {
-  box-shadow: 1px 1px 3px rgba(246, 2, 2, 0.508);
+  filter: drop-shadow(2px 2px 1px #c0d6d4);
   cursor: pointer;
 }
 
@@ -145,6 +145,7 @@ h1 {
 
 #you-won, #you-lose {
   width: 160px;
+  margin-bottom: 20px;
 }
 
 #restart {
