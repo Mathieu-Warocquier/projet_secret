@@ -302,6 +302,7 @@ function move() {
   nextLevel(); // passer au niveau suivant
 }
 
+
 function loop() {
   ctx.clearRect( 0, 0, canvas.width, canvas.height);
   if (!isPaused) {
@@ -314,7 +315,13 @@ function loop() {
   }
 }
 
-loop();
+const start = document.getElementById('start');
+start.addEventListener('click', (event) => {
+  start.classList.add('show');
+  loop();
+});
+
+// loop();
 
 // gestion elements audio
 
