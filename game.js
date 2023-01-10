@@ -3,7 +3,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-canvas.style.border = '5px solid #484fed';
+canvas.style.border = '5px solid #dcb444';
 ctx.lineWidth = 1;
 
 // constantes nécessaires
@@ -41,9 +41,9 @@ const paddle = {
 
 function drawPaddle() {
   ctx.beginPath();
-  ctx.fillStyle = '#484fed';
+  ctx.fillStyle = '#0d1134';
   ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
-  ctx.strokeStyle = '#484fed';
+  ctx.strokeStyle = '#c0d6d4';
   ctx.strokeRect(paddle.x, paddle.y, paddle.w, paddle.h);
   ctx.closePath();
 }
@@ -166,14 +166,15 @@ function bpCollission() {
 // créer les propriètés des briques
 
 const brickProp = {
-  row: 2,
+  row: 13,
   column: 13,
   w: 35,
-  h: 10,
-  padding: 3,
+  h: 15,
+  padding: 1,
   offsetX: 55,
   offsetY: 40,
-  fillColor: '#1fcb96',
+  fillColor: '#dcb444',
+
   visible: true,
 }
 
@@ -205,6 +206,8 @@ function drawBricks() {
         ctx.rect(brick.x, brick.y, brick.w, brick.h);
         ctx.fillStyle = brick.fillColor;
         ctx.fill();
+        ctx.strokeStyle = '#0d1134'
+        ctx.stroke();
         ctx.closePath();
       }
     })

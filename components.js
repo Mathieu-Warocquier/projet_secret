@@ -10,8 +10,8 @@ const LIFE_LOST = new Audio("sounds/life_lost.mp3");
 // chargement des images
 
 const LEVEL_IMG = new Image();
-LEVEL_IMG.src = "img/level.png";
+LEVEL_IMG.src = "img/level1.png";
 const LIFE_IMG = new Image();
-LIFE_IMG.src = "img/life1.png";
+LIFE_IMG.src = "img/life2.png";
 const SCORE_IMG = new Image();
-SCORE_IMG.src = "img/score.png";
+SCORE_IMG.src = "img/score1.png";
