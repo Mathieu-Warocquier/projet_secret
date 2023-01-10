@@ -3,7 +3,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-canvas.style.border = '5px solid #6198d8';
+canvas.style.border = '5px solid #484fed';
 ctx.lineWidth = 1;
 
 // constantes nécessaires
